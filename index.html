@@ -559,7 +559,7 @@
           A10.7 10.7 0 1 1 16 26.6zm5.9-8
           c-.3-.1-1.7-.8-2-.9
           -.2-.1-.4-.1-.6.2
-          l-.9 1.1
+            l-.9 1.1
             c-.2.2-.3.2-.6.1
             -1.6-.8-2.7-1.5-3.8-3.3
             -.3-.5.3-.5.8-1.5
@@ -622,23 +622,15 @@
         event.preventDefault();
       }
 
-      /*
-        InitiateCheckout
-        مع Content ID الخاص بالمتجر
-      */
-      ttq.track("InitiateCheckout", {
-        content_id: "ORION_HUB_WHATSAPP"
-      });
+      /* التحقق من وجود البكسل لمنع تعطل الزر في حال لم يتم تركيبه بعد */
+      if (typeof ttq !== 'undefined' && typeof ttq.track === 'function') {
+        ttq.track("InitiateCheckout", {
+          content_id: "ORION_HUB_WHATSAPP"
+        });
 
-      /*
-        Contact
-      */
-      ttq.track("Contact");
+        ttq.track("Contact");
+      }
 
-      /*
-        إعطاء TikTok Pixel وقتاً لإرسال الأحداث
-        قبل الانتقال لصفحة واتساب
-      */
       const targetURL = this.href;
 
       setTimeout(function () {
