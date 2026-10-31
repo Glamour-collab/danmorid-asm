@@ -308,7 +308,7 @@
 
     </div>
 
-    <!-- إعداد روابط واتساب وتتبع النقرات مع منع التكرار -->
+    <!-- إعداد روابط واتساب وتتبع النقرات (إرسال الإشارة مرة واحدة فقط عند أول نقر وتحويل العميل طبيعياً) -->
     <script>
     (function(){
 
@@ -316,7 +316,8 @@
         const whatsappMessage = 'مرحباً، لقد صادفت اعلانك على TikTok وأود معرفة المزيد؟';
         const whatsappURL = 'https://wa.me/' + whatsappNumber + '?text=' + encodeURIComponent(whatsappMessage);
 
-        let isClicked = false; // لمنع تكرار النقرات المزدوجة السريعة
+        // متغير لتتبع ما إذا تم إرسال إشارة البكسل في هذه الجلسة أم لا
+        let hasTracked = false;
 
         document.querySelectorAll('.whatsapp-link').forEach(function(link){
 
@@ -324,7 +325,7 @@
 
             link.addEventListener('click', function(event){
 
-                // السماح بالفتح في تبويبات جديدة بشكل طبيعي
+                // السماح بالفتح في تبويبات جديدة أو بالنقر المزدوج الخاص بشكل طبيعي
                 if (
                     event.button !== 0 ||
                     event.ctrlKey ||
@@ -335,27 +336,20 @@
                     return;
                 }
 
-                event.preventDefault();
-
-                // منع تكرار إرسال الحدث إذا تم النقر مسبقاً في نفس الجلسة
-                if (isClicked) {
-                    return;
-                }
-                isClicked = true;
-
-                // تسجيل حدث Contact لتيك توك بكسل الجديد لهدف تحسين النقر (Click Button)
-                try {
-                    if (typeof ttq !== 'undefined') {
-                        ttq.track('Contact');
+                // إرسال الإشارة (البكسل) أول مرة فقط
+                if (!hasTracked) {
+                    hasTracked = true;
+                    try {
+                        if (typeof window.ttq !== 'undefined' && typeof window.ttq.track === 'function') {
+                            window.ttq.track('Contact');
+                        }
+                    } catch(error) {
+                        // تجاهل أي خطأ تقني في البكسل لكي لا يؤثر على العميل
                     }
-                } catch(error) {
-                    // في حال حدث خطأ تقني، لا نمنع تحويل العميل للرابط
                 }
 
-                // مهلة زمنية قصيرة (200 ميلي ثانية) لإرسال الحدث للبكسل قبل الانتقال لواتساب
-                window.setTimeout(function(){
-                    window.location.href = whatsappURL;
-                }, 200);
+                // ملاحظة: لا نستخدم event.preventDefault()، 
+                // لكي يتم تحويل العميل إلى تطبيق واتساب فوراً وبكل سهولة عند كل نقرة.
 
             });
 
