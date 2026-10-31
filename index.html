@@ -65,6 +65,7 @@
       e.parentNode.insertBefore(n,e);
     };
 
+    // رقم البكسل الخاص بك
     ttq.load("DBHALB3C77UF910635FG");
     ttq.page();
   }(window, document, "ttq");
@@ -458,7 +459,7 @@
       <a
         id="whatsappCenter"
         class="whatsapp-center"
-        href="https://wa.me/972567845326"
+        href="https://wa.me/972567938099"
         aria-label="تواصل معنا عبر واتساب"
       >
         <svg
@@ -513,7 +514,7 @@
     <a
       id="whatsappBottom"
       class="whatsapp-bottom"
-      href="https://wa.me/972567845326"
+      href="https://wa.me/972567938099"
       aria-label="راسلنا واتساب"
     >
       <svg
@@ -556,9 +557,9 @@
     </a>
   </div>
 
-  <!-- WhatsApp + TikTok Events -->
+  <!-- WhatsApp + TikTok Events (Updated for Sales Conversion / CompletePayment) -->
   <script>
-    const WHATSAPP_NUMBER = "972567845326";
+    const WHATSAPP_NUMBER = "972567938099";
 
     const WHATSAPP_MESSAGE =
       "مرحبا، اريد المزيد من الإستفسار حول المنتج الترويجي ؟";
@@ -579,25 +580,23 @@
     whatsappCenter.href = whatsappURL;
     whatsappBottom.href = whatsappURL;
 
-    // تتبع الأحداث دون منع التحويل الطبيعي للرابط
-    function trackWhatsAppEvents() {
+    // دالة تتبع الأحداث المتوافقة مع حملة Sales Conversion
+    function trackWhatsAppEvents(e) {
       try {
         if (
           window.ttq &&
           typeof window.ttq.track === "function"
         ) {
-          window.ttq.track("InitiateCheckout", {
-            content_id: "DANA_STORE_WHATSAPP"
+          // إرسال حدث إتمام التحويل الذي تتوقعه خوارزمية حملة المبيعات
+          window.ttq.track('CompletePayment', {
+            content_type: 'product',
+            currency: 'USD',
+            value: 1.00
           });
-
-          window.ttq.track("Contact");
         }
       } catch (error) {
         // أخطاء التتبع لا تمنع الانتقال إلى واتساب
       }
-
-      // لا نستخدم preventDefault أو مؤقتًا للتحويل.
-      // المتصفح يتبع رابط واتساب الأصلي مباشرة.
     }
 
     whatsappCenter.addEventListener(
