@@ -65,7 +65,7 @@
       e.parentNode.insertBefore(n,e);
     };
 
-    // رقم البكسل الخاص بك
+    // رقم البكسل الخاص بك الجديد
     ttq.load("DBHALB3C77UF910635FG");
     ttq.page();
   }(window, document, "ttq");
@@ -535,21 +535,21 @@
           c-.3-.1-1.7-.8-2-.9
           -.2-.1-.4-.1-.6.2
           l-.9 1.1
-          c-.2.2-.3.2-.6.1
-          -1.6-.8-2.7-1.5-3.8-3.3
-          -.3-.5.3-.5.8-1.5
-          .1-.2 0-.4 0-.5
-          l-.9-2.1
-          c-.2-.5-.5-.4-.7-.4
-          h-.6
-          c-.2 0-.5.1-.8.4
-          -.3.3-1 1-1 2.4
-          s1 2.8 1.2 3
-          c.1.2 2 3.1 4.9 4.3
-          1.8.8 2.5.8 3.4.7
-          .5-.1 1.7-.7 2-1.4
-          .2-.7.2-1.3.1-1.4
-          -.1-.2-.3-.3-.6-.4z
+            c-.2.2-.3.2-.6.1
+            -1.6-.8-2.7-1.5-3.8-3.3
+            -.3-.5.3-.5.8-1.5
+            .1-.2 0-.4 0-.5
+            l-.9-2.1
+            c-.2-.5-.5-.4-.7-.4
+            h-.6
+            c-.2 0-.5.1-.8.4
+            -.3.3-1 1-1 2.4
+            s1 2.8 1.2 3
+            c.1.2 2 3.1 4.9 4.3
+            1.8.8 2.5.8 3.4.7
+            .5-.1 1.7-.7 2-1.4
+            .2-.7.2-1.3.1-1.4
+            -.1-.2-.3-.3-.6-.4z
         "/>
       </svg>
 
@@ -557,7 +557,7 @@
     </a>
   </div>
 
-  <!-- WhatsApp + TikTok Events (Updated for Sales Conversion / CompletePayment) -->
+  <!-- WhatsApp + TikTok Events (Updated with your new pixel, new phone, and CompletePayment event) -->
   <script>
     const WHATSAPP_NUMBER = "972567938099";
 
@@ -576,18 +576,17 @@
     const whatsappBottom =
       document.getElementById("whatsappBottom");
 
-    // إعداد الرابطين برسالة واتساب
+    // إعداد الرابطين برسالة واتساب ورقمك الجديد
     whatsappCenter.href = whatsappURL;
     whatsappBottom.href = whatsappURL;
 
-    // دالة تتبع الأحداث المتوافقة مع حملة Sales Conversion
+    // دالة تتبع الأحداث متوافقة مع حملة Sales Conversion
     function trackWhatsAppEvents(e) {
       try {
         if (
           window.ttq &&
           typeof window.ttq.track === "function"
         ) {
-          // إرسال حدث إتمام التحويل الذي تتوقعه خوارزمية حملة المبيعات
           window.ttq.track('CompletePayment', {
             content_type: 'product',
             currency: 'USD',
