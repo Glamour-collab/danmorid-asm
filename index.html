@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -343,7 +342,7 @@
             '?text=' +
             encodeURIComponent(whatsappMessage);
 
-        let navigationPending = false;
+        const trackingStorageKey = 'lunera_tiktok_events_sent';
 
         document.querySelectorAll('.whatsapp-link').forEach(function (link) {
 
@@ -363,24 +362,25 @@
 
                 event.preventDefault();
 
-                if (navigationPending) {
-                    return;
-                }
-
-                navigationPending = true;
-
                 try {
 
-                    if (
-                        window.ttq &&
-                        typeof window.ttq.track === 'function'
-                    ) {
+                    const eventsAlreadySent =
+                        localStorage.getItem(trackingStorageKey) === 'true';
 
-                        // Primary optimization event
-                        window.ttq.track('ClickButton');
+                    if (!eventsAlreadySent) {
 
-                        // Contact measurement event
-                        window.ttq.track('Contact');
+                        if (
+                            window.ttq &&
+                            typeof window.ttq.track === 'function'
+                        ) {
+
+                            localStorage.setItem(trackingStorageKey, 'true');
+
+                            // إرسال الإشارتين مرة واحدة فقط
+                            window.ttq.track('ClickButton');
+                            window.ttq.track('Contact');
+
+                        }
 
                     }
 
@@ -388,7 +388,7 @@
                     // Keep WhatsApp navigation working
                 }
 
-                // Allow time for TikTok Pixel requests
+                // تحويل العميل إلى واتساب عند كل نقرة
                 setTimeout(function () {
                     window.location.href = whatsappURL;
                 }, 500);
