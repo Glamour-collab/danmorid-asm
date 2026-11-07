@@ -416,7 +416,7 @@
         <a
           id="centerWhatsappButton"
           class="center-whatsapp-button"
-          href="https://wa.me/972567341418?text=مرحبًا،%20شاهدت%20إعلانكم%20على%20TikTok%20وأود%20معرفة%20المزيد."
+          href="https://wa.me/972567938099"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="التواصل معنا عبر واتساب"
@@ -438,7 +438,7 @@
           <a
             id="whatsappButton"
             class="whatsapp-button"
-            href="https://wa.me/972567341418?text=مرحبًا،%20شاهدت%20إعلانكم%20على%20TikTok%20وأود%20معرفة%20المزيد."
+            href="https://wa.me/972567938099"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="التواصل معنا عبر واتساب"
@@ -463,6 +463,53 @@
   </div>
 
   <script>
+    // ==========================================================
+    // جدول المسوقين: الرمز المختصر (في الرابط) + أرقام هواتفهم الحقيقية
+    // ==========================================================
+    const marketers = {
+        "as": "972567845326",   // أسماء (asmaa)
+        "so": "970567031881",   // سوما (soma)
+        "de": "972567341418"    // ضياء (deyaa)
+    };
+
+    // الرقم الافتراضي الخاص بك (في حال دخل الزبون مباشرة بدون رابط مسوق)
+    const defaultPhone = "972567938099";
+
+    window.addEventListener('DOMContentLoaded', () => {
+        // قراءة كود المسوق من الرابط (مثلاً: ?ref=as أو ?ref=so أو ?ref=de)
+        const urlParams = new URLSearchParams(window.location.search);
+        const marketerCode = urlParams.get('ref');
+
+        let targetPhone = defaultPhone;
+        let displayCode = "";
+
+        // التحقق من أن الكود مسجل في القائمة
+        if (marketerCode && marketers[marketerCode]) {
+            targetPhone = marketers[marketerCode];
+            displayCode = `(${marketerCode})`; // وضع الرمز المختصر بين قوسين في نهاية الرسالة
+        }
+
+        // تنظيف الرقم من أي رموز أو مسافات زائدة
+        const cleanPhone = targetPhone.replace(/[^0-9]/g, '');
+
+        // بناء الرسالة التسويقية الموحدة مع الرمز المختصر في نهايتها
+        const rawMessage = `مرحبًا، شاهدت إعلانكم على TikTok وأود معرفة المزيد. ${displayCode}`.trim();
+        const encodedMessage = encodeURIComponent(rawMessage);
+
+        // تحديث روابط زري الواتساب في الصفحة ديناميكياً
+        const whatsappButton = document.getElementById("whatsappButton");
+        const centerWhatsappButton = document.getElementById("centerWhatsappButton");
+
+        const finalWhatsAppUrl = `https://wa.me/${cleanPhone}?text=${encodedMessage}`;
+
+        if (whatsappButton) {
+            whatsappButton.href = finalWhatsAppUrl;
+        }
+        if (centerWhatsappButton) {
+            centerWhatsappButton.href = finalWhatsAppUrl;
+        }
+    });
+
     const whatsappButton = document.getElementById("whatsappButton");
     const centerWhatsappButton = document.getElementById("centerWhatsappButton");
 
